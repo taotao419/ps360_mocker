@@ -56,7 +56,7 @@ async def clientSend(websocket):
         input_text = input(
             "Accept commands [Q]uit [O]pened [Send] :")
 
-        if re.search(r"^send\s\w+\s\w{7}\s\d{14}$", input_text):
+        if re.search(r"^send\s\w+\s\w{7}\s\w+$", input_text):
             cmds = input_text.split(' ')
             report_status = cmds[1]
             pid = cmds[2]
@@ -79,7 +79,7 @@ async def clientSend(websocket):
 
 
 async def clientRun(wss_endpoint):
-    async with websockets.connect(wss_endpoint) as websocket:
+    async with websockets.connect(wss_endpoint, ping_interval=None) as websocket:
         await clientSend(websocket)
 
 # 发送回执
