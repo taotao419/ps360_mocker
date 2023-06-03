@@ -1,5 +1,5 @@
 ## 简介
-PS360_Mocker Xero Workflow打开之后, 模拟PS360与之进行交换. 只需简单几个按键, 或简单一句命令行就可以实现[自动/手动]发送打开回执\发送各种Draft Preliminary Sign 等指令.
+小工具名称是PS360_Mocker, 在Xero Workflow打开之后, 模拟PS360与之进行交换. 只需简单几个按键, 或简单一句命令行就可以实现[自动/手动]发送打开回执\发送各种Draft Preliminary Sign 等指令.
 
 ## 配置
 打开文件config.ini , 修改你需要登录的用户与其密码. 修改对应的Xero workflow服务器的登录Url
