@@ -54,9 +54,9 @@ def subscribe_hub_endpoint(access_token):
 async def clientSend(websocket):
     while True:
         input_text = input(
-            "Accept commands [Q]uit [O]pened [Send] :")
+            "Accept commands [Q]uit [O]pened [AO]Auto_Opened [Send] :")
 
-        if re.search(r"^send\s\w+\s\w{7}\s\w+$", input_text):
+        if re.search(r"^send\s\w+\s\w+\s\w+$", input_text):
             cmds = input_text.split(' ')
             report_status = cmds[1]
             pid = cmds[2]
@@ -65,9 +65,18 @@ async def clientSend(websocket):
             await websocket.send(command)
             await websocket.recv()
             print("\033[32m发送成功\033[0m")
+        elif input_text == "AO":
+            await wait_until_report_open(websocket)
+            print("\033[32mXWF打开了一个报告\033[0m")
+            opened_command = do_opened()
+            await websocket.send(opened_command)
+            print("\033[32m自动发送 已打开回执\033[0m")
+            await websocket.recv()
+            print("\033[32m发送成功\033[0m")
         elif input_text == "O":
             opened_command = do_opened()
             await websocket.send(opened_command)
+            print("\033[32m手动发送 已打开回执\033[0m")
             await websocket.recv()
             print("\033[32m发送成功\033[0m")
         elif input_text == "Q":
@@ -83,6 +92,16 @@ async def clientRun(wss_endpoint):
         await clientSend(websocket)
 
 # 发送回执
+
+
+async def wait_until_report_open(websocket):
+    while True:
+        res = await websocket.recv()
+        message_data = json.loads(res)
+        print(f"message  : [{message_data}]")
+        if 'event' in message_data:
+            if message_data["event"]["hub.event"] == "DiagnosticReport-open":
+                return True
 
 
 def do_opened():
