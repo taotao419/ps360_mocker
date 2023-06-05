@@ -200,6 +200,7 @@ def do_send(patient_id, accession_number, report_status):
 
 if __name__ == '__main__':
     print("PS360 模拟器 接受如下命令 [Q]uit [O]pened [Send]")
+    print("PS360 模拟器 Send 接受如下状态 final | preliminary | cancelled | partial")
     print("关闭命令 Ex : send cancelled PKODB44 20230529164440")
     token = get_token()
     wss = subscribe_hub_endpoint(token.access_token)
